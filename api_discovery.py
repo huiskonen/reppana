@@ -442,6 +442,23 @@ def main(repo_path: str, output_dir: str = "./output"):
 
 
 if __name__ == "__main__":
-    # Example usage
-    repo_path = "/path/to/your/java/repository"
-    main(repo_path)
+    import sys
+    
+    if len(sys.argv) < 2:
+        print("Usage: python api_discovery.py <repository_path> [output_directory]")
+        print("Example: python api_discovery.py ./my-java-repo ./output")
+        sys.exit(1)
+    
+    repo_path = sys.argv[1]
+    output_dir = sys.argv[2] if len(sys.argv) > 2 else "./output"
+    
+    # Validate repository path
+    if not os.path.exists(repo_path):
+        print(f"Error: Repository path '{repo_path}' does not exist")
+        sys.exit(1)
+    
+    if not os.path.isdir(repo_path):
+        print(f"Error: Repository path '{repo_path}' is not a directory")
+        sys.exit(1)
+    
+    main(repo_path, output_dir)
